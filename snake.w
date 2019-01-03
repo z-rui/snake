@@ -16,17 +16,17 @@ empty (0) or non-empty (1).
 
 We also need to record the location of the
 snake body, which is stored in the |body| field.
-The array |body| functions as a circular buffer: |body[j]| is the
-coordination of the snake tail while |body[i-1]| (or |body[rows*cols-1]|,
-if |i==0|) is the coordination of the snake head.
+The array |body| functions as a circular buffer: |body[tail]| is the
+coordination of the snake tail while |body[front-1]| (or |body[rows*cols-1]|,
+if |front==0|) is the coordination of the snake head.
 The capacity of the buffer equals the number of
-celss in the field.  We do not need to worry about the buffer being
+cells in the field.  We do not need to worry about the buffer being
 empty or overflow as they will not happen.
 
 The |dir| field can be one of 0--3 for N, E, S and W.
 
 @c
-typedef unsigned coord_t;
+typedef unsigned coord_t; /* point $(i,j)$ encoded as |i*cols+j| */
 struct game {
 	unsigned rows, cols;
 	unsigned char *cells;
@@ -37,6 +37,7 @@ struct game {
 };
 
 @ Forward declarations.
+@s chtype int
 @c
 void game_dtor(struct game *);
 void putch(unsigned, const chtype);
